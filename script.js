@@ -19,10 +19,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
     clickableImage.addEventListener('click', (event) => {
         if (!isDragging && !randomImage) { // Check if not dragging and no randomImage displayed
-            // Generate random coordinates within the visible area of the container
-            const containerRect = container.getBoundingClientRect();
-            const randomX = Math.random() * (containerRect.width - 50); // Adjust 50 as needed
-            const randomY = Math.random() * (containerRect.height - 50); // Adjust 50 as needed
+            // Get the width and height of the container
+            const containerWidth = container.clientWidth;
+            const containerHeight = container.clientHeight;
+
+            // Get the width and height of the random image
+            const imageWidth = 100; // Replace with the actual width of your random image
+            const imageHeight = 100; // Replace with the actual height of your random image
+
+            // Calculate the maximum allowable left and top values
+            const maxLeft = containerWidth - imageWidth;
+            const maxTop = containerHeight - imageHeight;
+
+            // Generate random coordinates within the container's dimensions
+            const randomX = Math.random() * maxLeft;
+            const randomY = Math.random() * maxTop;
 
             // Create a new random image
             randomImage = document.createElement('img');
@@ -72,54 +83,53 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-	function onMouseUp() {
-		if (isDragging) {
-			isDragging = false;
+    function onMouseUp() {
+        if (isDragging) {
+            isDragging = false;
 
-			// Get the position and dimensions of the random image
-			const rect = randomImage.getBoundingClientRect();
-			const randomImageLeft = rect.left;
-			const randomImageRight = rect.right;
-			const randomImageTop = rect.top;
-			const randomImageBottom = rect.bottom;
+            // Get the position and dimensions of the random image
+            const rect = randomImage.getBoundingClientRect();
+            const randomImageLeft = rect.left;
+            const randomImageRight = rect.right;
+            const randomImageTop = rect.top;
+            const randomImageBottom = rect.bottom;
 
-			// Get the position and dimensions of the rectangle
-			const rectangle = document.getElementById('coloredRectangle');
-			const rectangleRect = rectangle.getBoundingClientRect();
-			const rectangleLeft = rectangleRect.left;
-			const rectangleRight = rectangleRect.right;
-			const rectangleTop = rectangleRect.top;
-			const rectangleBottom = rectangleRect.bottom;
+            // Get the position and dimensions of the rectangle
+            const rectangle = document.getElementById('coloredRectangle');
+            const rectangleRect = rectangle.getBoundingClientRect();
+            const rectangleLeft = rectangleRect.left;
+            const rectangleRight = rectangleRect.right;
+            const rectangleTop = rectangleRect.top;
+            const rectangleBottom = rectangleRect.bottom;
 
-			// Check if any part of the random image touches any part of the rectangle
-			const randomImageTouchesRectangle =
-				randomImageLeft <= rectangleRight &&
-				randomImageRight >= rectangleLeft &&
-				randomImageTop <= rectangleBottom &&
-				randomImageBottom >= rectangleTop;
+            // Check if any part of the random image touches any part of the rectangle
+            const randomImageTouchesRectangle =
+                randomImageLeft <= rectangleRight &&
+                randomImageRight >= rectangleLeft &&
+                randomImageTop <= rectangleBottom &&
+                randomImageBottom >= rectangleTop;
 
-			// Play sound 1 if the random image touches the rectangle, otherwise play sound 2
-			if (randomImageTouchesRectangle) {
-				sound2.pause();
-				sound1.currentTime = 0;
-				sound1.play();
-			} else {
-				
-				sound1.pause();
-				sound2.currentTime = 0;
-				sound2.play();
-			}
+            // Play sound 1 if the random image touches the rectangle, otherwise play sound 2
+            if (randomImageTouchesRectangle) {
+                sound2.pause();
+                sound1.currentTime = 0;
+                sound1.play();
+            } else {
+                sound1.pause();
+                sound2.currentTime = 0;
+                sound2.play();
+            }
 
-			// Remove the random image
-			container.removeChild(randomImage);
+            // Remove the random image
+            container.removeChild(randomImage);
 
-			// Change back to image1
-			clickableImage.src = image1.src;
-			image2Shown = false;
+            // Change back to image1
+            clickableImage.src = image1.src;
+            image2Shown = false;
 
-			// Reset variables
-			randomImage = null;
-			offsetX = offsetY = 0;
-		}
-	}
+            // Reset variables
+            randomImage = null;
+            offsetX = offsetY = 0;
+        }
+    }
 });
