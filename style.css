@@ -1,0 +1,51 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+#container {
+    position: relative;
+}
+
+#clickableImage {
+    max-height: 100vh; /* Set a maximum height of 100% of the viewport height */
+    width: auto; /* Maintain the aspect ratio */
+    position: relative; /* Ensure relative positioning for pseudo-element */
+}
+
+#container {
+    position: relative;
+}
+
+#coloredRectangle {
+    position: absolute;
+    top: 49%;
+    left: 46%;
+    width: 5%;
+    height: 3%;
+    background-color: red;
+    opacity: 0;
+    z-index: 999;
+    pointer-events: none;
+}
+
+
+#randomImage {
+    position: absolute;
+    top: 50%; /* Center vertically */
+    left: 50%; /* Center horizontally */
+    transform: translate(-50%, -50%); /* Center both horizontally and vertically */
+    cursor: pointer;
+}
+
+/* Add CSS animations for animation1 and animation2 here */
+@keyframes animation1 {
+    /* Define your animation1 keyframes here */
+}
+
+@keyframes animation2 {
+    /* Define your animation2 keyframes here */
+}
